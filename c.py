@@ -38,9 +38,9 @@ def main():
     t0 = 0
     t1 = 0
     rate = 0.00001
-    for i in range(1000000):
+    for i in range(100000):
         t0_g, t1_g = grad_des(data, rate, t0, t1)
-        if i %10000 == 0:
+        if i %100000 == 0:
             print(f"cost =={cost_calc(data, t0, t1)} t0 = {t0_g} t1 = {t1_g}")
         t0 = t0_g
         t1 = t1_g

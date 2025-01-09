@@ -43,8 +43,8 @@ def main():
             flag = int(flag)
         else:
             flag = 0
-    data = pd.read_csv('./data.csv')
-    data1 = pd.read_csv('./data.csv')
+    data = pd.read_csv('./data1.csv')
+    data1 = pd.read_csv('./data1.csv')
     devided = round(get_min(min(data['km'])))
     print(f'dev={devided}')
     data['km'] = data['km'] / devided

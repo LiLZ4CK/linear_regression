@@ -54,7 +54,7 @@ def main():
 
     t0 = float(theta[0])
     t1 = float(theta[1])
-    rate = 0.001
+    rate = 0.01
     print(f'cost1 == {calculate_mse(data1, t0, t1)}')
     s = ''
     add = '█'

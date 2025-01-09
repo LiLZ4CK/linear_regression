@@ -35,14 +35,10 @@ def calculate_mse(data, t0, t1):
 
 def is_int_or_float(value):
     try:
-        int(value)
+        float(value)
         return True
     except ValueError:
-        try:
-            float(value)
-            return True
-        except ValueError:
-            return False
+        return False
         
 def get_theta() ->list[float]:
     my_file = Path("tetas.txt")

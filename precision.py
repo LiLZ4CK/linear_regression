@@ -1,8 +1,5 @@
 import sys
 import pandas as pd
-import seaborn as sns
-import numpy as np
-import matplotlib.pyplot as plt
 from predict import predec
 from train import calculate_mse
 from tools import predec, calculate_mse, grad_desc, get_theta
@@ -10,7 +7,7 @@ from tools import predec, calculate_mse, grad_desc, get_theta
 
 def ssr_counter(data):
     ssr = 0
-    for i in  range(len(data)):
+    for i in range(len(data)):
         x = data['predec'][i]
         y = data['price'][i]
         ssr += (y - x) ** 2
@@ -19,7 +16,7 @@ def ssr_counter(data):
 def tss_counter(data):
     tss = 0
     mean = data['price'].sum() / len(data)
-    for i in  range(len(data)):
+    for i in range(len(data)):
         y = data['price'][i]
         tss += (y - mean) ** 2
     return tss
@@ -31,7 +28,8 @@ def main():
     ssr = ssr_counter(data)
     tss = tss_counter(data)
     pres = 1 - (ssr / tss)
-    print(pres)
+    print(f' Precision of your program is {pres}')
 
 if __name__ == "__main__":
     main()
+

@@ -39,12 +39,16 @@ def is_int_or_float(value):
         return True
     except ValueError:
         return False
-        
-def get_theta() ->list[float]:
-    my_file = Path("tetas.txt")
-    if not my_file.exists():
-        print('Cant find tetas')
+    
+
+def isthere(path):
+    my_file = Path(path)
+    if my_file.exists() == False:
+        print(f'Cant find {path}')
         sys.exit(1)
+
+def get_theta() ->list[float]:
+    isthere("tetas.txt")
     tetas = open('tetas.txt', "r")
     s = tetas.read()
     tetas.close()    

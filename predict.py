@@ -14,14 +14,15 @@ def get_type(value):
 
 def main():
     
-    print('Welcome to CPP (Car Price Predictor :)')
+    print('Welcome to CPP')
     value = input("> Please entre your mileage: ")
     value  = get_type(value)
     
-    
     theta = get_theta()
     predected = predec(value, theta[0], theta[1])
-    print(f"The estimated price is : {predected}")
+    if predected < 200:
+        print("\033[31mWarning: The mileage is outside the training range. The prediction may not be reliable.\033[0m")
+    print(f"The estimated price is : {max(round(predected), 0)}")
 
 if __name__ == "__main__":
     main()

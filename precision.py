@@ -1,8 +1,7 @@
 import sys
 import pandas as pd
 from predict import predec
-from train import calculate_mse
-from tools import predec, calculate_mse, grad_desc, get_theta
+from tools import predec, get_theta, isthere
 
 
 def ssr_counter(data):
@@ -22,13 +21,16 @@ def tss_counter(data):
     return tss
 
 def main():
-    data = pd.read_csv('./data1.csv')
+    isthere("./data.csv'")
+    data = pd.read_csv('./data.csv')
     theta = get_theta()
     data['predec'] = round(predec(data['km'], theta[0], theta[1]))
     ssr = ssr_counter(data)
     tss = tss_counter(data)
     pres = 1 - (ssr / tss)
-    print(f' Precision of your program is {pres}')
+    if pres < 0:
+        pres = 0
+    print(f' Precision of your program is {(round(pres, 4) * 100)}%')
 
 if __name__ == "__main__":
     main()

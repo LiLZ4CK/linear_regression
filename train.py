@@ -4,15 +4,17 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-from tools import predec, calculate_mse, grad_desc, get_theta
+import time as tm
+from tools import isthere, grad_desc, get_theta
 
 
 
 
 def show_graph(t0, t1, data1, close):
-    pred_price = t0 + t1 * data1['km']
+    km_values = data1['km'].to_numpy()
+    pred_price = t0 + t1 * km_values
     plt.scatter(data1['km'], data1['price'], color='blue', alpha=0.5, label='Data Points')
-    plt.plot(data1['km'],   pred_price, color='red', label='Regression Line')
+    plt.plot(km_values,   pred_price, color='red', label='Regression Line')
     plt.title('Car Price vs Mileage')
     plt.xlabel('Kilometers')
     plt.ylabel('Price')
@@ -34,8 +36,9 @@ def get_min(data) ->int:
     return x ** i
 
 def main():
-    print('Welecome to the trainer programe.')
-    print('Please wait for the predict programe to be trained!')
+    isthere("./data.csv")
+    print('Welcome to the training programe.')
+    print('Please wait for the prediction programe to be trained:\n')
     flag = 0
     if(len(sys.argv) == 2):
         flag = sys.argv[1]
@@ -43,10 +46,9 @@ def main():
             flag = int(flag)
         else:
             flag = 0
-    data = pd.read_csv('./data1.csv')
-    data1 = pd.read_csv('./data1.csv')
+    data = pd.read_csv('./data.csv')
+    data1 = pd.read_csv('./data.csv')
     devided = round(get_min(min(data['km'])))
-    print(f'dev={devided}')
     data['km'] = data['km'] / devided
     data['price'] = data['price'] / devided
     
@@ -54,23 +56,19 @@ def main():
 
     t0 = float(theta[0])
     t1 = float(theta[1])
-    rate = 0.01
-    print(f'cost1 == {calculate_mse(data1, t0, t1)}')
+    rate = 0.001
     s = ''
     add = '█'
     pe = None
     spaces = ' '
-    #t0_l = t0
-    #t1_l = t1
-
     t0 /= devided
+
     ran = range(65000)
     for i in ran:
 
         t0_g, t1_g = grad_desc(data, rate, t0, t1)
         t0 = t0_g
         t1 = t1_g
-        
         p = (i / ran.stop) * 103
         fixed = f"{p:,.0f}"
         if fixed != pe:
@@ -87,14 +85,12 @@ def main():
                 show_graph(t0 * devided, t1, data1, 1)
 
     t0 *= devided
-    #t0
     print("100%|", s, spaces * (100 - int(fixed)), '| ', i + 1, '/',
           ran.stop, ' [00:01<00:00, 194.13it/s]', sep='', end="\r")
     tetas = open('tetas.txt', "w")
-    tetas.write(str(t0) + '\n' + str(t1))
+    tetas.write(str(round(t0, 3)) + '\n' + str(round(t1, 3)))
     tetas.close()
     print('\n\nDone!')
-    print(f'cost2 == {calculate_mse(data1, t0, t1)}')
     if (flag > 0):
         show_graph(t0,t1,data1,0)
 
